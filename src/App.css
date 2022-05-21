@@ -1,0 +1,10 @@
+.App {
+  text-align: center;
+}
+
+.nav {
+  display: flex;
+  justify-content: center;
+  background-color: #30a490;
+  margin-bottom: 25px;
+}

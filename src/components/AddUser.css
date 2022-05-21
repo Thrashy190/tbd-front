@@ -1,0 +1,7 @@
+.input-item {
+  width: 50%;
+}
+
+.input-container {
+  display: flex;
+}
