@@ -1,17 +1,17 @@
-import React, { useState } from "react";
-import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
-import TextField from "@mui/material/TextField";
-import Modal from "@mui/material/Modal";
+import React, { useState } from 'react';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import TextField from '@mui/material/TextField';
+import Modal from '@mui/material/Modal';
 
 const style = {
-  position: "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
   width: 1000,
-  bgcolor: "background.paper",
-  border: "2px solid #000",
+  bgcolor: 'background.paper',
+  border: '2px solid #000',
   boxShadow: 24,
   p: 4,
 };
@@ -24,17 +24,16 @@ const AddUser = ({ setData, data }) => {
   let date = new Date().toLocaleString();
 
   const [dataTemplate, setDataTemplate] = useState({
-    id: "",
-    nombre: "",
-    apellidos: "",
-    fecha_nacimiento: "",
-    fecha_registro: date,
-    direccion: "",
-    codigo_postal: 0,
-    telefono: 0,
-    peso: 0,
-    altura: 0,
-    antecedentes: "",
+    id_paciente: 2,
+    nombre: 'Diego',
+    apellido: 'Lopez',
+    fecha_nacimiento: '2002/07/02 21:02:44',
+    direccion_paciente: 'Saltillo',
+    telefono: 8441039924,
+    cp: 21411,
+    peso: 50,
+    altura: 160,
+    fecha_registro: '2002/07/02 21:02:44',
   });
 
   const handleChange = (prop) => (event) => {
@@ -43,8 +42,25 @@ const AddUser = ({ setData, data }) => {
   };
 
   const handleSubmit = () => {
+    onSubmitForm(dataTemplate);
     setData([dataTemplate, ...data]);
     handleClose();
+  };
+
+  const onSubmitForm = async (e, dataTemplate) => {
+    try {
+      const body = { dataTemplate };
+      const response = await fetch('http://localhost:3000/pacientes', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(body),
+      });
+      console.log(response);
+
+      window.location.reload(true);
+    } catch (err) {
+      console.error(err.message);
+    }
   };
 
   return (
@@ -53,7 +69,7 @@ const AddUser = ({ setData, data }) => {
         <Button
           variant="contained"
           onClick={handleOpen}
-          sx={{ color: "white", fontSize: 15 }}
+          sx={{ color: 'white', fontSize: 15 }}
         >
           Agregar paciente
         </Button>
@@ -67,10 +83,10 @@ const AddUser = ({ setData, data }) => {
         <Box sx={style}>
           <div>Agregar paciente</div>
           <form>
-            <div sx={{ display: "flex", flexDirection: "row" }} className="">
+            <div sx={{ display: 'flex', flexDirection: 'row' }} className="">
               <TextField
                 value={dataTemplate.nombre}
-                onChange={handleChange("nombre")}
+                onChange={handleChange('nombre')}
                 className="input-item"
                 sx={{ mb: 2, mt: 2, mr: 2 }}
                 id="outlined-basic"
@@ -79,7 +95,7 @@ const AddUser = ({ setData, data }) => {
               ></TextField>
               <TextField
                 value={dataTemplate.apellidos}
-                onChange={handleChange("apellidos")}
+                onChange={handleChange('apellidos')}
                 className="input-item"
                 sx={{ mb: 2, mt: 2 }}
                 id="outlined-basic"
@@ -90,7 +106,7 @@ const AddUser = ({ setData, data }) => {
             <div>
               <TextField
                 value={dataTemplate.fecha_nacimiento}
-                onChange={handleChange("fecha_nacimiento")}
+                onChange={handleChange('fecha_nacimiento')}
                 sx={{ mb: 2 }}
                 fullWidth
                 id="outlined-basic"
@@ -98,10 +114,10 @@ const AddUser = ({ setData, data }) => {
                 variant="outlined"
               ></TextField>
             </div>
-            <div sx={{ display: "flex", flexDirection: "row" }}>
+            <div sx={{ display: 'flex', flexDirection: 'row' }}>
               <TextField
                 value={dataTemplate.direccion}
-                onChange={handleChange("direccion")}
+                onChange={handleChange('direccion')}
                 sx={{ mb: 2, mr: 2 }}
                 id="outlined-basic"
                 label="Direccion"
@@ -109,7 +125,7 @@ const AddUser = ({ setData, data }) => {
               ></TextField>
               <TextField
                 value={dataTemplate.codigo_postal}
-                onChange={handleChange("codigo_postal")}
+                onChange={handleChange('codigo_postal')}
                 sx={{ mb: 2 }}
                 id="outlined-basic"
                 label="Codigo postal"
@@ -119,7 +135,7 @@ const AddUser = ({ setData, data }) => {
             <div>
               <TextField
                 value={dataTemplate.telefono}
-                onChange={handleChange("telefono")}
+                onChange={handleChange('telefono')}
                 sx={{ mb: 2 }}
                 fullWidth
                 id="outlined-basic"
@@ -127,10 +143,10 @@ const AddUser = ({ setData, data }) => {
                 variant="outlined"
               ></TextField>
             </div>
-            <div sx={{ display: "flex", flexDirection: "row" }}>
+            <div sx={{ display: 'flex', flexDirection: 'row' }}>
               <TextField
                 value={dataTemplate.peso}
-                onChange={handleChange("peso")}
+                onChange={handleChange('peso')}
                 sx={{ mb: 2, mr: 2 }}
                 id="outlined-basic"
                 label="Peso"
@@ -138,7 +154,7 @@ const AddUser = ({ setData, data }) => {
               ></TextField>
               <TextField
                 value={dataTemplate.altura}
-                onChange={handleChange("altura")}
+                onChange={handleChange('altura')}
                 sx={{ mb: 2 }}
                 id="outlined-basic"
                 label="Altura"
@@ -148,7 +164,7 @@ const AddUser = ({ setData, data }) => {
             <div>
               <TextField
                 value={dataTemplate.antecedentes}
-                onChange={handleChange("antecedentes")}
+                onChange={handleChange('antecedentes')}
                 sx={{ mb: 2 }}
                 fullWidth
                 id="outlined-multiline-static"
@@ -157,7 +173,7 @@ const AddUser = ({ setData, data }) => {
                 rows={4}
               />
             </div>
-            <Button onClick={handleSubmit} sx={{ color: "#30a490" }}>
+            <Button onClick={handleSubmit} sx={{ color: '#30a490' }}>
               Registrar paciente
             </Button>
           </form>
