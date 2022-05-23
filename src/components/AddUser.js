@@ -24,38 +24,31 @@ const AddUser = ({ setData, data }) => {
   let date = new Date().toLocaleString();
 
   const [dataTemplate, setDataTemplate] = useState({
-    id_paciente: 2,
-    nombre: 'Diego',
-    apellido: 'Lopez',
+    id_paciente: 1,
+    nombre: '',
+    apellido: '',
     fecha_nacimiento: '2002/07/02 21:02:44',
-    direccion_paciente: 'Saltillo',
-    telefono: 8441039924,
-    cp: 21411,
-    peso: 50,
-    altura: 160,
+    direccion: '',
+    telefono: 0,
+    codigo_postal: 0,
+    peso: 0,
+    altura: 0,
     fecha_registro: '2002/07/02 21:02:44',
+    antecedentes: '',
   });
 
   const handleChange = (prop) => (event) => {
     setDataTemplate({ ...dataTemplate, [prop]: event.target.value });
-    console.log(dataTemplate);
   };
 
-  const handleSubmit = () => {
-    onSubmitForm(dataTemplate);
-    setData([dataTemplate, ...data]);
-    handleClose();
-  };
-
-  const onSubmitForm = async (e, dataTemplate) => {
+  const onSubmitForm = async (e) => {
     try {
-      const body = { dataTemplate };
       const response = await fetch('http://localhost:3000/pacientes', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(body),
+        body: JSON.stringify(dataTemplate),
       });
-      console.log(response);
+      setData([dataTemplate, ...data]);
 
       window.location.reload(true);
     } catch (err) {
@@ -82,7 +75,7 @@ const AddUser = ({ setData, data }) => {
       >
         <Box sx={style}>
           <div>Agregar paciente</div>
-          <form>
+          <form onSubmit={() => onSubmitForm()}>
             <div sx={{ display: 'flex', flexDirection: 'row' }} className="">
               <TextField
                 value={dataTemplate.nombre}
@@ -173,7 +166,7 @@ const AddUser = ({ setData, data }) => {
                 rows={4}
               />
             </div>
-            <Button onClick={handleSubmit} sx={{ color: '#30a490' }}>
+            <Button type="submit" value="Submit" sx={{ color: '#30a490' }}>
               Registrar paciente
             </Button>
           </form>
