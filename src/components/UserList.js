@@ -34,7 +34,7 @@ const ItemList = ({ setData, data }) => {
           <div className="space">Telefono: {data[5]}</div>
         </div>
         <div className="container-button column-card">
-          <EditUser />
+          <EditUser data={data} />
           <DeleteInfo
             setData={setData}
             data={data}

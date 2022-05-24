@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
@@ -21,20 +21,18 @@ const AddUser = ({ setData, data }) => {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
-  let date = new Date().toLocaleString();
-
   const [dataTemplate, setDataTemplate] = useState({
-    id_paciente: 1,
-    nombre: '',
-    apellido: '',
+    id_paciente: Math.random() * (1000 - 0) + 0,
+    nombre: 'Diego',
+    apellido: 'Lopez',
     fecha_nacimiento: '2002/07/02 21:02:44',
-    direccion: '',
-    telefono: 0,
-    codigo_postal: 0,
-    peso: 0,
-    altura: 0,
+    direccion: 'Montessori',
+    telefono: 123123,
+    cp: 123123,
+    peso: 123123,
+    altura: 123123,
     fecha_registro: '2002/07/02 21:02:44',
-    antecedentes: '',
+    antecedentes: '1swdcwdcw wefdcwe cdwe',
   });
 
   const handleChange = (prop) => (event) => {
@@ -42,6 +40,8 @@ const AddUser = ({ setData, data }) => {
   };
 
   const onSubmitForm = async (e) => {
+    // const fecha = new Date()
+
     try {
       const response = await fetch('http://localhost:3000/pacientes', {
         method: 'POST',
@@ -49,8 +49,7 @@ const AddUser = ({ setData, data }) => {
         body: JSON.stringify(dataTemplate),
       });
       setData([dataTemplate, ...data]);
-
-      window.location.reload(true);
+      window.location = '/';
     } catch (err) {
       console.error(err.message);
     }
@@ -87,8 +86,8 @@ const AddUser = ({ setData, data }) => {
                 variant="outlined"
               ></TextField>
               <TextField
-                value={dataTemplate.apellidos}
-                onChange={handleChange('apellidos')}
+                value={dataTemplate.apellido}
+                onChange={handleChange('apellido')}
                 className="input-item"
                 sx={{ mb: 2, mt: 2 }}
                 id="outlined-basic"
@@ -117,8 +116,8 @@ const AddUser = ({ setData, data }) => {
                 variant="outlined"
               ></TextField>
               <TextField
-                value={dataTemplate.codigo_postal}
-                onChange={handleChange('codigo_postal')}
+                value={dataTemplate.cp}
+                onChange={handleChange('cp')}
                 sx={{ mb: 2 }}
                 id="outlined-basic"
                 label="Codigo postal"

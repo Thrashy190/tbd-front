@@ -25,7 +25,7 @@ const DeleteInfo = ({ setData, data, id, name }) => {
       const deleteTodo = await fetch(`http://localhost:3000/pacientes/${id}`, {
         method: 'DELETE',
       });
-      window.location.reload(true);
+      window.location = '/';
     } catch (err) {
       console.error(err.message);
     }
